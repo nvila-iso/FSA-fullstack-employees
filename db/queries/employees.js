@@ -1,6 +1,11 @@
+import db from "#db/client";
+
 /** @returns the employee created according to the provided details */
 export async function createEmployee({ name, birthday, salary }) {
   // TODO
+  const SQL = `INSERT INTO employees (name, birthday, salary) VALUES($1, $2, $3) RETURNING *;`;
+  const { rows: employee } = await db.query(SQL, [name, birthday, salary]);
+  return employee[0];
 }
 
 // === Part 2 ===
@@ -8,6 +13,9 @@ export async function createEmployee({ name, birthday, salary }) {
 /** @returns all employees */
 export async function getEmployees() {
   // TODO
+  const SQL = `SELECT * FROM employees;`;
+  const { rows: employees } = await db.query(SQL);
+  return employees;
 }
 
 /**
