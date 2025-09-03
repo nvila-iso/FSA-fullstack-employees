@@ -7,7 +7,7 @@ import employeeRoutes from "./api/employees.js";
 app.use(express.json());
 
 app.route("/").get((req, res) => {
-  res.send("Welcome to the FullStack Employee Squid Games!");
+  res.send("Welcome to the Fullstack Employees API.");
 });
 
 app.use(("/employees", employeeRoutes));

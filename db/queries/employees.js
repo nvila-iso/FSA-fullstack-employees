@@ -24,6 +24,9 @@ export async function getEmployees() {
  */
 export async function getEmployee(id) {
   // TODO
+  const SQL = `SELECT * FROM employees WHERE id = $1;`;
+  const { rows: employee } = await db.query(SQL, [id]);
+  return employee[0];
 }
 
 /**
@@ -32,6 +35,16 @@ export async function getEmployee(id) {
  */
 export async function updateEmployee({ id, name, birthday, salary }) {
   // TODO
+  const SQL = `
+  UPDATE employees
+  SET
+    name = $2,
+    birthday = $3,
+    salary = $4
+  WHERE id = $1
+  RETURNING *;`;
+  const { rows: employee } = await db.query(SQL, [id, name, birthday, salary]);
+  return employee[0];
 }
 
 /**
@@ -40,4 +53,12 @@ export async function updateEmployee({ id, name, birthday, salary }) {
  */
 export async function deleteEmployee(id) {
   // TODO
+  // deleting someone is so harsh
+  const SQL = `
+    DELETE FROM employees
+    WHERE id = $1
+    RETURNING *;  
+  `;
+  const { rows: employee } = await db.query(SQL, [id]);
+  return employee[0];
 }
